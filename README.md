@@ -2,6 +2,7 @@
 A collaborative project between Kian and I.
 
 *--Project Brief--*
+
 This will be a rogue-like/lite based on the classic arcade game "Snake". 
 It will operate similar to recent rogue-likes such as: Binding of Isaac; Risk of Rain and Nuclear Throne
 by including pick-ups, various enemies and maps.

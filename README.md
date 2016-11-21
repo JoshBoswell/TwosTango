@@ -9,5 +9,5 @@ by including pick-ups, various enemies and maps.
 
 Mostly likely it will be made using the Visual Studio 2015 Community Edition as well as MonoGame.
 
-This is just a side project to work on while we are studing to get some experience with paired development 
+This is just a side project to work on while we are studying to get some experience with paired development 
 and development in the style of GitHub.

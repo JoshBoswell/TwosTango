@@ -26,9 +26,7 @@ namespace RogueSnakeGame.MapSystem
             this.tileWidth = 32;
             this.tileHeight = 32;
 
-            tiles = new Tile[width, height];
-            FillMap(Tile.FLOOR);
-            FillEdges(Tile.WALL);
+            this.tiles = new Tile[width, height];
         }
 
         public void LoadContent(ContentManager content)
@@ -66,27 +64,14 @@ namespace RogueSnakeGame.MapSystem
             return tiles[x, y] == Tile.FLOOR;
         }
 
-        private void FillMap(Tile tile)
+        public Tile GetTile(int x, int y)
         {
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    tiles[x, y] = tile;
-                }
-            }
+            return tiles[x, y];
         }
 
-        private void FillEdges(Tile tile, int borderWidth = 1)
+        public void SetTile(int x, int y, Tile tile)
         {
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    if (x < borderWidth || x >= width - borderWidth || y < borderWidth || y >= height - borderWidth)
-                        tiles[x, y] = tile;
-                }
-            }
+            tiles[x, y] = tile;
         }
 
         public enum Tile

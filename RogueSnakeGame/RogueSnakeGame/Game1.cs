@@ -16,7 +16,7 @@ namespace RogueSnakeGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            map = new MapGenerator(25, 15).GenerateMap();
+            map = new MapGenerator(new Point(25, 15)).GenerateMap();
         }
 
         protected override void Initialize()

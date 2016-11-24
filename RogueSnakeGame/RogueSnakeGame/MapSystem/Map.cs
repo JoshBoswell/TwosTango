@@ -11,22 +11,18 @@ namespace RogueSnakeGame.MapSystem
 {
     class Map
     {
-        private int width;
-        private int height;
-        private int tileWidth;
-        private int tileHeight;
+        private Point size;
+        private Point tileSize;
         private Tile[,] tiles;
         private Texture2D floorTexture;
         private Texture2D wallTexture;
 
-        public Map(int width, int height)
+        public Map(Point size)
         {
-            this.width = width;
-            this.height = height;
-            this.tileWidth = 32;
-            this.tileHeight = 32;
+            this.size = size;
+            this.tileSize = new Point(32, 32);
 
-            this.tiles = new Tile[width, height];
+            this.tiles = new Tile[size.X, size.Y];
         }
 
         public void LoadContent(ContentManager content)
@@ -37,9 +33,9 @@ namespace RogueSnakeGame.MapSystem
 
         public void Draw(SpriteBatch batch)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < size.Y; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < size.X; x++)
                 {
                     Texture2D texture = floorTexture;
                     switch (tiles[x, y])
@@ -51,27 +47,27 @@ namespace RogueSnakeGame.MapSystem
                             texture = wallTexture;
                             break;
                     }
-                    batch.Draw(texture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), Color.White);
+                    batch.Draw(texture, new Rectangle(x * tileSize.X, y * tileSize.Y, tileSize.X, tileSize.Y), Color.White);
                 }
             }
         }
 
-        public bool PlaceFree(int x, int y)
+        public bool PlaceFree(Point pos)
         {
-            if (x < 0 || x >= width || y < 0 || y >= height) // Any tile which is out of bounds is considered impassable
+            if (pos.X < 0 || pos.X >= size.X || pos.Y < 0 || pos.Y >= size.Y) // Any tile which is out of bounds is considered impassable
                 return false;
 
-            return tiles[x, y] == Tile.FLOOR;
+            return tiles[pos.X, pos.Y] == Tile.FLOOR;
         }
 
-        public Tile GetTile(int x, int y)
+        public Tile GetTile(Point pos)
         {
-            return tiles[x, y];
+            return tiles[pos.X, pos.Y];
         }
 
-        public void SetTile(int x, int y, Tile tile)
+        public void SetTile(Point pos, Tile tile)
         {
-            tiles[x, y] = tile;
+            tiles[pos.X, pos.Y] = tile;
         }
 
         public enum Tile

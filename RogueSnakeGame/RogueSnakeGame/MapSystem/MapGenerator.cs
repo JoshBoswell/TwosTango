@@ -21,8 +21,8 @@ namespace RogueSnakeGame.MapSystem
         public Map GenerateMap()
         {
             Map map = new Map(size);
-            FillMap(map, Tile.FLOOR);
-            SplitIntoRooms(map, new Point(4, 4));
+            FillMap(map, Tile.WALL);
+            PlaceRooms(map, new Point(3, 3), new Point(10, 10), 200);
             return map;
         }
 
@@ -45,6 +45,41 @@ namespace RogueSnakeGame.MapSystem
                 {
                     if (x < borderWidth || x >= size.X - borderWidth || y < borderWidth || y >= size.Y - borderWidth)
                         map.SetTile(new Point(x, y), tile);
+                }
+            }
+        }
+
+        private void PlaceRooms(Map map, Point minRoomSize, Point maxRoomSize, int attempts, int avoidEdges = 1, Tile tile = Tile.FLOOR)
+        {
+            List<Rectangle> rooms = new List<Rectangle>();
+            for (int i = 0; i < attempts; i++)
+            {
+                Point roomSize = new Point(Util.Range(minRoomSize.X, maxRoomSize.X + 1), Util.Range(minRoomSize.Y, maxRoomSize.Y + 1));
+                Rectangle room = new Rectangle(new Point(Util.Range(avoidEdges, size.X - roomSize.X - avoidEdges), Util.Range(avoidEdges, size.Y - roomSize.Y - avoidEdges)), roomSize);
+                bool collides = false;
+
+                Rectangle roomWithBuffer = new Rectangle(new Point(room.X - 1, room.Y - 1), new Point(room.Width + 2, room.Height + 2));
+                foreach (Rectangle other in rooms)
+                {
+                    if (roomWithBuffer.Intersects(other))
+                    {
+                        collides = true;
+                        break;
+                    }
+                }
+
+                if (!collides)
+                    rooms.Add(room);
+            }
+
+            foreach(Rectangle room in rooms)
+            {
+                for (int y = room.Y; y < room.Y + room.Height; y++)
+                {
+                    for (int x = room.X; x < room.X + room.Width; x++)
+                    {
+                        map.SetTile(new Point(x, y), tile);
+                    }
                 }
             }
         }

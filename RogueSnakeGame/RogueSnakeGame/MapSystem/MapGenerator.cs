@@ -49,7 +49,7 @@ namespace RogueSnakeGame.MapSystem
             }
         }
 
-        private void PlaceRooms(Map map, Point minRoomSize, Point maxRoomSize, int attempts, int avoidEdges = 1, Tile tile = Tile.FLOOR)
+        private void PlaceRooms(Map map, Point minRoomSize, Point maxRoomSize, int attempts, int padding = 1, int avoidEdges = 1, Tile tile = Tile.FLOOR)
         {
             List<Rectangle> rooms = new List<Rectangle>();
             for (int i = 0; i < attempts; i++)
@@ -58,10 +58,10 @@ namespace RogueSnakeGame.MapSystem
                 Rectangle room = new Rectangle(new Point(Util.Range(avoidEdges, size.X - roomSize.X - avoidEdges), Util.Range(avoidEdges, size.Y - roomSize.Y - avoidEdges)), roomSize);
                 bool collides = false;
 
-                Rectangle roomWithBuffer = new Rectangle(new Point(room.X - 1, room.Y - 1), new Point(room.Width + 2, room.Height + 2));
+                Rectangle roomWithPadding = new Rectangle(new Point(room.X - padding, room.Y - padding), new Point(room.Width + padding * 2, room.Height + padding * 2));
                 foreach (Rectangle other in rooms)
                 {
-                    if (roomWithBuffer.Intersects(other))
+                    if (roomWithPadding.Intersects(other))
                     {
                         collides = true;
                         break;
